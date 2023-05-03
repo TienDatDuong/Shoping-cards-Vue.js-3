@@ -1,43 +1,41 @@
 <template>
-  <el-card :body-style="{ padding: '0px' }">
-<!--    <img-->
-<!--        src="urlImage"-->
-<!--        class="image"-->
-<!--    />-->
+  <el-card class="mb-20">
     <ElImageComponent
-        :src="url"
+        :src="props.item.image"
         class="image"
     />
-    <div style="padding: 14px">
-      <div class="info-product">
-        <span style="margin-bottom: 5px">PS 4</span>
-        <span style="margin-bottom: 5px">3.6tr</span>
+    <el-row>
+      <div style="padding: 14px">
+        <div class="info-product">
+          <span style="margin-bottom: 5px">{{props.item.name}}</span>
+          <span style="margin-bottom: 5px">{{props.item.price}}</span>
+        </div>
+        <div class="bottom">
+          <el-row :gutter="40">
+            <el-col :span="6">
+              <el-button type="primary" class="button" @click="buyItem(props.item)">Mua</el-button>
+            </el-col>
+            <el-col :span="6">
+              <el-button type="success" class="button">Xem chi tiết</el-button>
+            </el-col>
+          </el-row>
+        </div>
       </div>
-      <div class="bottom">
-        <el-row :gutter="20">
-          <el-col :span="6">
-            <el-button type="primary" class="button">Mua</el-button>
-          </el-col>
-          <el-col :span="6">
-            <el-button type="success" class="button">Xem chi tiết</el-button>
-          </el-col>
-        </el-row>
-      </div>
-    </div>
+    </el-row>
   </el-card>
 </template>
-<script>
-import ElImageComponent from './ElImageComponent.vue'
+<script setup>
+import ElImageComponent from '../../component/ElImages/indexImageComponents.vue'
+import {defineProps, defineEmits} from 'vue'
 
-export default {
-  components:{
-    ElImageComponent
-  },
-  data(){
-    return{
-      url : 'https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png'
-    }
+const props = defineProps({
+  item:{
+    type: Object
   }
+})
+const emit = defineEmits('exportItem')
+const buyItem = (item) => {
+  emit('exportItem', item)
 }
 </script>
 <style scoped>
@@ -48,6 +46,6 @@ export default {
 
 .image {
   width: 100%;
-  display: block;
+  display: inline-block;
 }
 </style>

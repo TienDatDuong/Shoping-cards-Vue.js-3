@@ -30,17 +30,26 @@
           placeholder="Please input"
           @select="handleSelect"
       />
-      <el-badge :value="0" class="item">
-        <el-button type="primary" class="buy">
+      <el-badge :value="props.countListProduct" class="item">
+        <el-button @click="openDrawers" type="primary" class="buy">
           <el-icon><ShoppingCart /></el-icon>
         </el-button>
       </el-badge>
     </div>
   </el-menu>
+
 </template>
 <script setup>
-import {ref, onMounted} from 'vue'
+import {ref, onMounted, defineEmits, defineProps} from 'vue'
 import { ShoppingCart } from '@element-plus/icons-vue'
+
+const props = defineProps({
+  countListProduct: {
+    type: Number,
+    default: 0
+  }
+})
+
 
 const loadAll = () => {
   return [
@@ -54,6 +63,13 @@ const loadAll = () => {
   ]
 }
 let timeout
+
+const emit = defineEmits(['openDrawer'])
+
+const openDrawers = () => {
+ emit('openDrawer')
+}
+
 const querySearchAsync = (queryString, cb) => {
   const results = queryString
       ? links.value.filter(createFilter(queryString))
